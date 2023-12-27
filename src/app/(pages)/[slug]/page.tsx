@@ -19,14 +19,15 @@ import { generateMeta } from '../../_utilities/generateMeta'
 // See https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#dynamic
 // If you are not using Payload Cloud then this line can be removed, see `../../../README.md#cache`
 export const dynamic = 'force-dynamic'
+import Categories from '../../_components/Categories'
 
-import classes from './index.module.css'
+import classes from './index.module.scss'
 
 export default async function Page({ params: { slug = 'home' } }) {
   const { isEnabled: isDraftMode } = draftMode()
 
   let page: Page | null = null
-  let category: Category[] | null = null
+  let categories: Category[] | null = null
 
   try {
     page = await fetchDoc<Page>({
@@ -35,7 +36,7 @@ export default async function Page({ params: { slug = 'home' } }) {
       draft: isDraftMode,
     })
 
-    category = await fetchDocs<Category>('categories')
+    categories = await fetchDocs<Category>('categories')
   } catch (error) {
     // when deploying this template on Payload Cloud, this page needs to build before the APIs are live
     // so swallow the error here and simply render the page with fallback data where necessary
@@ -62,7 +63,9 @@ export default async function Page({ params: { slug = 'home' } }) {
         <section>
           <Hero {...hero} />
 
-          <Gutter>{/* categories */}</Gutter>
+          <Gutter className={classes.home}>
+            <Categories categories={categories} />
+          </Gutter>
         </section>
       ) : (
         <>
