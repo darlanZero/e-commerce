@@ -58,7 +58,15 @@ export const CartPage: React.FC<{
             <div className={classes.cartWrapper}>
               <div>
                 {/* CART LIST HEADER */}
-                <div className={classes.header}></div>
+                <div className={classes.header}>
+                  <p>Products</p>
+                  <div className={classes.headerItemDetails}>
+                    <p></p>
+                    <p></p>
+                    <p>Quantity</p>
+                  </div>
+                  <p className={classes.headersubtotal}>Subtotal</p>
+                </div>
                 {/* CART ITEM LIST */}
                 <ul className={classes.itemsList}>
                   {cart?.items?.map((item, index) => {
@@ -77,8 +85,8 @@ export const CartPage: React.FC<{
                         <CartItem
                           product={product}
                           title={title}
-                          qty={quantity}
                           metaImage={metaImage}
+                          qty={quantity}
                           addItemToCart={addItemToCart}
                         />
                       )
@@ -91,6 +99,16 @@ export const CartPage: React.FC<{
               <div className={classes.summary}>
                 <div className={classes.row}>
                   <h6 className={classes.cartTotal}>Summary</h6>
+                </div>
+
+                <div className={classes.row}>
+                  <p className={classes.cartTotal}>Delivery Charge</p>
+                  <p className={classes.cartTotal}>$0</p>
+                </div>
+
+                <div className={classes.row}>
+                  <h6 className={classes.cartTotal}>Grand Total</h6>
+                  <h6 className={classes.cartTotal}>{cartTotal.formatted}</h6>
                 </div>
 
                 <Button
